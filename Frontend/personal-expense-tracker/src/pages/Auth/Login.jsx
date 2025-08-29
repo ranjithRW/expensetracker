@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import AuthLayout from '../../components/layouts/AuthLayout'
 import { useNavigate } from 'react-router-dom'
 import Input from '../../components/Inputs/input'
+import { Link } from 'react-router-dom'
 
 const Login = () => {
 
@@ -13,23 +14,58 @@ const Login = () => {
   const navigate = useNavigate();
 
   //handle login function
- const handleLogin =async(e)=>{
- }
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+
+    if(!validateEmail(email)){
+      seterror("Please enter a valid email address");
+      return;
+    }
+
+    if(!password || password.length < 8){
+      seterror("Password must be at least 8 characters long");
+      return;
+    }
+
+    seterror("");
+
+    //here login api call
+    
+
+  }
 
   return (
     <AuthLayout>
       <div className='lg:w-[70%] h-3/4 md:h-full flex flex-col justify-center'>
         <h3 className='text-xl font-semibold text-black'>Welcome Back</h3>
-        <p className='text-xs text-slate-700 mt-[5px] mb-0'>Please enter your details</p>
+        <p className='text-xs text-slate-700 mt-[5px] mb-10'>Please enter your details</p>
 
         <form onSubmit={handleLogin}>
           <Input
             value={email}
-            onChange={(e) => setemail(e.target.value)}
+            onChange={(target) => setemail(target.value)}
             label="Email Address"
-            placeholder="Enter your email"
+            placeholder="obito@gmail.com"
             type="text"
           />
+          <Input
+            value={password}
+            onChange={(target) => setpassword(target.value)}
+            label="Password"
+            placeholder="Minimum 8 characters"
+            type="password"
+          />
+
+
+
+          {error && <p className='text-red-500 text-xs my-2'>{error}</p>}
+
+          <button type="submit" className='btn-primary'>LOGIN</button>
+
+          <p className='text-[13px] text-slate-800 mt-3'>Don't have an account?{" "}
+            <Link className="font-medium text-primary underline" to="/signup" >SignUp</Link>
+          </p>
         </form>
 
       </div>
