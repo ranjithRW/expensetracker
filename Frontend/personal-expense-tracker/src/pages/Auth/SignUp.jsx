@@ -18,12 +18,28 @@ const SignUp = () => {
 
   //handle signup function
   const handleSignUp = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
+
+    if (!fullName) {
+      seterror("Please enter your full name");
+      return;
+    }
+    if (!validateEmail(email)) {
+      seterror("Please enter a valid email address");
+      return;
+    }
+    if (!password || password.length < 8) {
+      seterror("Password must be at least 8 characters long");
+      return;
+    }
+
+    seterror("");
+
   }
   return (
     <AuthLayout>
       <div className='lg:w-[100%] h-auto md:h-full mt-10 md:mt-0 flex flex-col justify-center'>
-        <h3 className='text-xl font-semibold text-black'>create an account</h3>
+        <h3 className='text-xl font-semibold text-black'>Create an account</h3>
         <p className='text-xs text-slate-700 mt-[5px] mb-6'>Join us today by entering your details below.</p>
 
 
