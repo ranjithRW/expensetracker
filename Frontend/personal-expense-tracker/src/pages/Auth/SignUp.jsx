@@ -37,14 +37,14 @@ const SignUp = () => {
               value={fullName}
               onChange={(target) => setfullName(target.value)}
               label="Full Name"
-              placeholder="John Doe"
+              placeholder="Obito Uchiha"
               type="text"
             />
             <Input
               value={email}
               onChange={(target) => setemail(target.value)}
               label="Email Address"
-              placeholder="enter your email address"
+              placeholder="Enter your email address"
               type="text"
             />
             <div className='col-span-2'>
@@ -63,7 +63,7 @@ const SignUp = () => {
           <p className='text-[13px] text-slate-800 mt-3'>Already have an account?{" "}
             <Link className="font-medium text-primary underline" to="/login" >Login</Link>
           </p>
-          
+
         </form>
       </div>
 
