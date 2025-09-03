@@ -1,0 +1,16 @@
+# Ignore environment variables
+.env
+
+# Ignore node modules
+node_modules/
+
+# Ignore uploads folder
+uploads/
+
+# Ignore Excel files
+*.xlsx
+
+# Ignore package lock file
+package-lock.json
+
+package.json

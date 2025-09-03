@@ -1,14 +1,20 @@
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
 import AuthLayout from '../../components/layouts/AuthLayout'
 import { useNavigate } from 'react-router-dom'
 import Input from '../../components/Inputs/input'
 import { Link } from 'react-router-dom'
+import axiosInstance from '../../utils/axiosInstance'
+import { API_PATH } from '../../utils/apiPath'
+import { validateEmail } from "../../utils/helper"
+import { UserContext } from '../../context/userContext'
 
 const Login = () => {
 
   const [email, setemail] = useState("");
-  const [password, setpassword] = useState("");
-  const [error, seterror] = useState(null);
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");  // Initialize as empty string instead of null
+
+  const { updateUser } = useContext(UserContext);
 
 
   const navigate = useNavigate();
@@ -17,22 +23,38 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-
-    if(!validateEmail(email)){
-      seterror("Please enter a valid email address");
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email address");
       return;
     }
 
-    if(!password || password.length < 8){
-      seterror("Password must be at least 8 characters long");
+    if (!password || password.length < 8) {
+      setError("Password must be at least 8 characters long");
       return;
     }
 
-    seterror("");
+    setError("");
 
     //here login api call
-    
-
+    try {
+      const response = await axiosInstance.post(API_PATH.AUTH.LOGIN, {
+        email,
+        password,
+      });
+      const { token, user } = response.data;
+      if (token) {
+        localStorage.setItem("token", token);
+        updateUser(user);
+        navigate("/dashboard")
+      }
+    }
+    catch (error) {
+      if (error.response && error.response.data.message) {
+        setError(error.response.data.message);
+      } else {
+        setError("something went wrong ,please try again");
+      }
+    }
   }
 
   return (
@@ -44,20 +66,18 @@ const Login = () => {
         <form onSubmit={handleLogin}>
           <Input
             value={email}
-            onChange={(target) => setemail(target.value)}
+            onChange={(e) => setemail(e.target.value)}  // Fixed: use 'e' for event
             label="Email Address"
             placeholder="obito@gmail.com"
             type="text"
           />
           <Input
             value={password}
-            onChange={(target) => setpassword(target.value)}
+            onChange={(e) => setPassword(e.target.value)}  // Fixed: use 'e' for event
             label="Password"
             placeholder="Minimum 8 characters"
             type="password"
           />
-
-
 
           {error && <p className='text-red-500 text-xs my-2'>{error}</p>}
 
