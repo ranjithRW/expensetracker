@@ -22,10 +22,10 @@ const RecentIncome = ({ transactions, onSeeMore }) => {
                     <TransactionInfoCard
                         key={item._id}
                         title={item.source}
-                        icon={item.amount}
+                        icon={item.icon}
                         date={moment(item.date).format("Do MMM YYYY")}
                         amount={item.amount}
-                        type="expense"
+                        type="income"
                         hideDeleteBtn
                     />
                 ))}

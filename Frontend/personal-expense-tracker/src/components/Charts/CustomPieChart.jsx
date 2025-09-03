@@ -20,7 +20,7 @@ const CustomPieChart = ({ data, label, totalAmount, colors, showTextAnchor }) =>
                     data={data}
                     dataKey="amount"
                     nameKey="name"
-                    cx="505"
+                    cx="50%"
                     Cy="50%"
                     outerRadius={130}
                     innerRadius={100}

@@ -1,9 +1,9 @@
 import React from 'react'
 import { LuUtensils, LuTrendingUp, LuTrendingDown, LuTrash2 } from 'react-icons/lu'
 
-const TransactionInfoCard = ({ title, icon, date, amount, hideDeleteBtn }) => {
+const TransactionInfoCard = ({ title, icon, date, amount, hideDeleteBtn, type, onDelete }) => {
 
-    const getAmountStyles = () =>  type === "income" ? "bg-green-50 text-green-500" : "bg-red-50 text-red-500"
+    const getAmountStyles = () =>  type === "income" ? "bg-green-50 text-green-500" : "bg-red-50 text-red-500";
 
     return (
         <div className='group relative flex items-center gap-4 mt-2 p-3 rounded-lg hover:bg-100/60'>
