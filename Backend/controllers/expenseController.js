@@ -6,7 +6,7 @@ exports.addExpense = async (req, res) => {
     const userId = req.user.id;
 
     try {
-        
+
         const { icon, category, amount, date } = req.body;
         if (!category || !amount || !date) {
             return res.status(400).json({ message: "Please fill all the fields" });
@@ -23,12 +23,12 @@ exports.addExpense = async (req, res) => {
     }
     catch (error) {
         res.status(500).json({ message: "Error in adding Expense category", error: error.message });
-    }   
+    }
 
 };
 
 //get all expense sources
-exports.getAllExpense = async (req, res) => { 
+exports.getAllExpense = async (req, res) => {
     const userId = req.user.id;
     try {
         const expense = await Expense.find({ userId }).sort({ date: -1 });
@@ -49,10 +49,10 @@ exports.deleteExpense = async (req, res) => {
     catch (error) {
         res.status(500).json({ message: "Error in deleting Expense source", error: error.message });
     }
- };
+};
 
 //download income as excel
-exports.downloadExpenseExcel = async (req, res) => { 
+exports.downloadExpenseExcel = async (req, res) => {
     const userId = req.user.id;
     try {
         const expense = await Expense.find({ userId }).sort({ date: -1 });
@@ -61,14 +61,14 @@ exports.downloadExpenseExcel = async (req, res) => {
         const data = expense.map((item) => ({
             Category: item.category,
             Amount: item.amount,
-            Date: item.date, 
+            Date: item.date ? new Date(item.date).toLocaleDateString() : "",
         }));
 
         //create worksheet and workbook
-        const wb=xlsx.utils.book_new();
-        const ws=xlsx.utils.json_to_sheet(data);
-        xlsx.utils.book_append_sheet(wb,ws,"Expense");
-        xlsx.writeFile(wb,"expense_details.xlsx");
+        const wb = xlsx.utils.book_new();
+        const ws = xlsx.utils.json_to_sheet(data);
+        xlsx.utils.book_append_sheet(wb, ws, "Expense");
+        xlsx.writeFile(wb, "expense_details.xlsx");
         res.download("expense_details.xlsx");
     }
     catch (error) {

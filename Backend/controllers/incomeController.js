@@ -61,7 +61,7 @@ exports.downloadIncomeExcel = async (req, res) => {
         const data = income.map((item) => ({
             Source: item.source,
             Amount: item.amount,
-            Date: item.date, 
+            Date: item.date ? new Date(item.date).toLocaleDateString() : "",
         }));
 
         //create worksheet and workbook
