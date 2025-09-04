@@ -22,8 +22,8 @@ const AddExpenseForm = ({ onAddExpense }) => {
             <Input
                 value={expense.category}
                 onChange={({ target }) => handleChange("category", target.value)}
-                label="expense category"
-                placeholder="Freelncer,salary etc..,"
+                label="Expense Category"
+                placeholder="Rent,movie etc..,"
                 type="text"
             />
 
